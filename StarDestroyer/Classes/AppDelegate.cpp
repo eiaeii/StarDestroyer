@@ -31,7 +31,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
         glview = GLViewImpl::create("My Game");
         director->setOpenGLView(glview);
     }
-	glview->setFrameSize(480, 720);
+	glview->setFrameSize(360, 640);
+	glview->setDesignResolutionSize(720, 1280, ResolutionPolicy::SHOW_ALL);
     // turn on display FPS
     director->setDisplayStats(true);
 
@@ -39,7 +40,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     director->setAnimationInterval(1.0 / 60);
 
     // create a scene. it's an autorelease object
-	auto scene = GameScene::create();
+	auto scene = GameScene::createScene();
 
     // run
     director->runWithScene(scene);
