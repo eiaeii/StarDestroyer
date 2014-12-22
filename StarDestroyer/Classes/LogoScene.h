@@ -1,17 +1,15 @@
 #pragma once
 #include "cocos2d.h"
 
-
-class GameScene :
+class LogoScene :
 	public cocos2d::Layer
 {
 public:
 	virtual bool init();
 	static cocos2d::Scene* createScene();
-	CREATE_FUNC(GameScene);
-
+	CREATE_FUNC(LogoScene);
 private:
-	void backgroundMove(float ft);
-	
+	void nextScene(float ft);
+	void preloadResources();
 };
 

@@ -19,15 +19,9 @@ Scene* GameScene::createScene()
 	auto scene = Scene::createWithPhysics();
 	auto background = BackgroundLayer::create();
 	scene->addChild(background, -10);
+	auto visibleSize = Director::getInstance()->getVisibleSize();
+	auto sprite = Sprite::createWithSpriteFrameName("hero1left_01.png");
+	sprite->setPosition(visibleSize.width / 2, sprite->getContentSize().height);
+	scene->addChild(sprite);
 	return scene;
-}
-
-void GameScene::preloadResources()
-{
-	Director::getInstance()->getTextureCache()->addImage("map/bg1.jpg");
-
-	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("hero/hero1.plist");
-
-	CocosDenshion::SimpleAudioEngine::getInstance()->preloadBackgroundMusic("sound/background-music1.mp3");
-	
 }
