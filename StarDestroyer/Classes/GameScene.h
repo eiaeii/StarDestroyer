@@ -11,14 +11,13 @@ public:
 	static cocos2d::Scene* createScene();
 	CREATE_FUNC(GameScene);
 
-private:
-	void backgroundMove(float ft);
-	void setPhysicsWorld(PhysicsWorld* world){ m_world = world; }
-	
-private:
-	PhysicsWorld* m_world;
-	
 protected:
+	void backgroundMove(float ft);
+	void setPhysicsWorld(cocos2d::PhysicsWorld* world);
+	void movePlane(cocos2d::Touch*, cocos2d::Event*);
+
+protected:
+	cocos2d::PhysicsWorld *m_world;
 	Player *m_player;
 };
 
