@@ -13,14 +13,14 @@ bool BackgroundLayer::init()
 
 	auto backgroundA = Sprite::create("map/bg1.jpg");
 	backgroundA->setTag(e_BackgroundA);
-	backgroundA->setAnchorPoint(Point::ZERO);
-	backgroundA->setPosition(Point::ZERO);
+	backgroundA->setAnchorPoint(Vec2::ZERO);
+	backgroundA->setPosition(Vec2::ZERO);
 	this->addChild(backgroundA);
 
 	auto backgroundB = Sprite::create("map/bg1.jpg");
 	backgroundB->setTag(e_BackgroundB);
-	backgroundB->setAnchorPoint(Point::ZERO);
-	backgroundB->setPosition(Point::ZERO);
+	backgroundB->setAnchorPoint(Vec2::ZERO);
+	backgroundB->setPosition(Vec2::ZERO);
 	this->addChild(backgroundB);
 
 	this->schedule(schedule_selector(BackgroundLayer::backgroundMove));

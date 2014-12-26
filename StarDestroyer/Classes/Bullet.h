@@ -1,13 +1,12 @@
 #pragma once
 #include "cocos2d.h"
 
-class Player :
+class Bullet :
 	public cocos2d::Sprite
 {
 public:
 	virtual bool init();
-	CREATE_FUNC(Player);
+	CREATE_FUNC(Bullet);
 protected:
-	void shoot(float ft);
+	void update(float delta) override;
 };
-

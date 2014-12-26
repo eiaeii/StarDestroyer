@@ -12,9 +12,11 @@ public:
 	CREATE_FUNC(GameScene);
 
 protected:
-	void backgroundMove(float ft);
 	void setPhysicsWorld(cocos2d::PhysicsWorld* world);
-	void movePlane(cocos2d::Touch*, cocos2d::Event*);
+	void onTouchMoved(cocos2d::Touch*, cocos2d::Event*);
+	bool onContactBegin(cocos2d::PhysicsContact &contact);
+
+	void onEnter() override;
 
 protected:
 	cocos2d::PhysicsWorld *m_world;

@@ -40,6 +40,7 @@ void LogoScene::preloadResources()
 {
 	Director::getInstance()->getTextureCache()->addImage("map/bg1.jpg");
 	Director::getInstance()->getTextureCache()->addImage("hero/plane1.png");
+	Director::getInstance()->getTextureCache()->addImage("bullet/plane1.png");
 
 	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("hero/hero1.plist");
 
