@@ -8,7 +8,7 @@ bool Bullet::init()
 	{
 		return false;
 	}
-	this->initWithFile("bullet/plane1.png");
+	this->initWithFile("bullet/assisent1_01.png");
 	this->setTag(ObjectType::TYPE_ENEMY_BULLET);
 	auto body = PhysicsBody::createCircle(5.0f);
 	this->setPhysicsBody(body);

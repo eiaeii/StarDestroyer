@@ -13,7 +13,7 @@ bool Player::init()
 	this->setPosition(visibleSize.width / 2, this->getContentSize().height);
 	auto body = PhysicsBody::createCircle(20.0f);
 	this->setPhysicsBody(body);
-	schedule(schedule_selector(Player::shoot), 0.2f);
+	schedule(schedule_selector(Player::shoot), 0.5f);
 
 	return true;
 }
@@ -21,15 +21,40 @@ bool Player::init()
 
 void Player::shoot(float ft)
 {
-	auto bullet = Bullet::create();
 	auto planePosition = this->getPosition();
 	auto planeSize = this->getContentSize();
-	this->addChild(bullet);
-	//bullet->setPosition(Vec2(planePosition.x + planeSize.width / 2, planePosition.y + planeSize.height / 2));
-	auto actionMove = MoveTo::create(2.0f, Vec2(planePosition.x + planeSize.width / 2, Director::getInstance()->getVisibleSize().height));
-	auto remove = CallFunc::create([](){
+
+	auto bullet1 = Bullet::create(); 
+	bullet1->setRotation(-25.0f);
+	this->getParent()->addChild(bullet1);
+	bullet1->setPosition(planePosition.x, planePosition.y + planeSize.height / 2);
+	auto actionMove1 = MoveBy::create(5.0f, Vec2(-500, Director::getInstance()->getVisibleSize().height));
+	auto remove1 = CallFunc::create([](){
 		
 	});
-	auto sequence = Sequence::create(actionMove, remove, NULL);
-	bullet->runAction(sequence);
+	auto sequence1 = Sequence::create(actionMove1, remove1, NULL);
+	bullet1->runAction(sequence1);
+
+
+	auto bullet2 = Bullet::create();
+	this->getParent()->addChild(bullet2);
+	bullet2->setPosition(planePosition.x, planePosition.y + planeSize.height / 2);
+	auto actionMove2 = MoveBy::create(5.0f, Vec2(0, Director::getInstance()->getVisibleSize().height));
+	auto remove2 = CallFunc::create([](){
+
+	});
+	auto sequence2 = Sequence::create(actionMove2, remove2, NULL);
+	bullet2->runAction(sequence2);
+
+
+	auto bullet3 = Bullet::create();
+	bullet3->setRotation(25.0f);
+	this->getParent()->addChild(bullet3);
+	bullet3->setPosition(planePosition.x, planePosition.y + planeSize.height / 2);
+	auto actionMove3 = MoveBy::create(5.0f, Vec2(500, Director::getInstance()->getVisibleSize().height));
+	auto remove3 = CallFunc::create([](){
+
+	});
+	auto sequence3 = Sequence::create(actionMove3, remove3, NULL);
+	bullet3->runAction(sequence3);
 }

@@ -40,7 +40,13 @@ void GameScene::setPhysicsWorld(PhysicsWorld* world)
 
 void GameScene::onTouchMoved(cocos2d::Touch *touch, cocos2d::Event *event)
 {
-	m_player->setPosition(m_player->getPosition() + touch->getDelta());
+	auto position = m_player->getPosition() + touch->getDelta();
+	auto visibleSize = Director::getInstance()->getVisibleSize();
+	position.x = position.x < 0 ? 0 : position.x;
+	position.x = position.x > visibleSize.width ? visibleSize.width : position.x;
+	position.y = position.y < 0 ? 0 : position.y;
+	position.y = position.y > visibleSize.height ? visibleSize.height : position.y;
+	m_player->setPosition(position);
 }
 
 void GameScene::onEnter()
