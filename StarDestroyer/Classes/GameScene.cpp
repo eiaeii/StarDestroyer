@@ -65,7 +65,6 @@ void GameScene::onEnter()
 
 	};
 	listener->onTouchMoved = CC_CALLBACK_2(GameScene::onTouchMoved, this);
-
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 
 	auto world = PhysicsBody::createEdgeBox(Director::getInstance()->getVisibleSize());
