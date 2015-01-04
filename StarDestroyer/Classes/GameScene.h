@@ -15,6 +15,7 @@ protected:
 	void setPhysicsWorld(cocos2d::PhysicsWorld* world);
 	void onTouchMoved(cocos2d::Touch*, cocos2d::Event*);
 	bool onContactBegin(cocos2d::PhysicsContact &contact);
+	bool onContactPreSolve(cocos2d::PhysicsContact& contact, cocos2d::PhysicsContactPreSolve& solve);
 
 	void onEnter() override;
 

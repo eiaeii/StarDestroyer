@@ -7,6 +7,4 @@ class Bullet :
 public:
 	virtual bool init();
 	CREATE_FUNC(Bullet);
-protected:
-	void update(float delta) override;
 };

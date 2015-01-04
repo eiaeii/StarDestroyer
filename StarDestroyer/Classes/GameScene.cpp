@@ -54,7 +54,6 @@ void GameScene::onEnter()
 	Layer::onEnter();
 
 	m_player = Player::create();
-	m_player->setTag(ObjectType::TYPE_PLAYER);
 	this->addChild(m_player);
 
 	auto listener = EventListenerTouchOneByOne::create();
@@ -68,22 +67,31 @@ void GameScene::onEnter()
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 
 	auto world = PhysicsBody::createEdgeBox(Director::getInstance()->getVisibleSize());
+	world->setCategoryBitmask(Gategorybitmask::GATEGORYBITMASK_WORLD);
+	world->setContactTestBitmask(0xFFFFFFFF);
+	world->setCollisionBitmask(Collisionbitmask::COLLISIONBITMASK_WORLD);
 	auto node = Node::create();
-	node->setTag(ObjectType::TYPE_WORLD);
 	node->setPosition(Director::getInstance()->getVisibleSize() / 2);
 	node->setPhysicsBody(world);
 	this->addChild(node);
 
 	auto contactListener = EventListenerPhysicsContact::create();
 	contactListener->onContactBegin = CC_CALLBACK_1(GameScene::onContactBegin, this);
+	contactListener->onContactPreSolve = CC_CALLBACK_2(GameScene::onContactPreSolve, this);
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, this);
 }
+
 
 bool GameScene::onContactBegin(cocos2d::PhysicsContact &contact)
 {
 	auto spriteA = contact.getShapeA()->getBody()->getNode();
-	auto spriteB = contact.getShapeA()->getBody()->getNode();
+	auto spriteB = contact.getShapeB()->getBody()->getNode();
 
-	
+	return true;
+}
+
+
+bool GameScene::onContactPreSolve(PhysicsContact& contact, PhysicsContactPreSolve& solve)
+{
 	return true;
 }

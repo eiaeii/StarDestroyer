@@ -24,37 +24,43 @@ void Player::shoot(float ft)
 	auto planePosition = this->getPosition();
 	auto planeSize = this->getContentSize();
 
+	auto visibleSize = Director::getInstance()->getVisibleSize();
+	static float sAngle = 90.0f - CC_RADIANS_TO_DEGREES(atan(visibleSize.height / visibleSize.width));
+
 	auto bullet1 = Bullet::create(); 
-	bullet1->setRotation(-25.0f);
+	bullet1->setRotation(-sAngle);
 	this->getParent()->addChild(bullet1);
 	bullet1->setPosition(planePosition.x, planePosition.y + planeSize.height / 2);
-	auto actionMove1 = MoveBy::create(5.0f, Vec2(-500, Director::getInstance()->getVisibleSize().height));
+	bullet1->getPhysicsBody()->setVelocity(Vec2(-visibleSize.width, visibleSize.height));
+	/*auto actionMove1 = MoveBy::create(2.0f, Vec2(-visibleSize.width, visibleSize.height));
 	auto remove1 = CallFunc::create([](){
 		
 	});
 	auto sequence1 = Sequence::create(actionMove1, remove1, NULL);
-	bullet1->runAction(sequence1);
+	bullet1->runAction(sequence1);*/
 
 
 	auto bullet2 = Bullet::create();
 	this->getParent()->addChild(bullet2);
 	bullet2->setPosition(planePosition.x, planePosition.y + planeSize.height / 2);
-	auto actionMove2 = MoveBy::create(5.0f, Vec2(0, Director::getInstance()->getVisibleSize().height));
-	auto remove2 = CallFunc::create([](){
+	auto actionMove2 = MoveBy::create(2.0f, Vec2(0, visibleSize.height));
+	bullet2->getPhysicsBody()->setVelocity(Vec2(0, visibleSize.height));
+	/*auto remove2 = CallFunc::create([](){
 
 	});
 	auto sequence2 = Sequence::create(actionMove2, remove2, NULL);
-	bullet2->runAction(sequence2);
+	bullet2->runAction(sequence2);*/
 
 
 	auto bullet3 = Bullet::create();
-	bullet3->setRotation(25.0f);
+	bullet3->setRotation(sAngle);
 	this->getParent()->addChild(bullet3);
 	bullet3->setPosition(planePosition.x, planePosition.y + planeSize.height / 2);
-	auto actionMove3 = MoveBy::create(5.0f, Vec2(500, Director::getInstance()->getVisibleSize().height));
+	bullet3->getPhysicsBody()->setVelocity(Vec2(visibleSize.width, visibleSize.height));
+	/*auto actionMove3 = MoveBy::create(2.0f, Vec2(visibleSize.width, visibleSize.height));
 	auto remove3 = CallFunc::create([](){
 
 	});
 	auto sequence3 = Sequence::create(actionMove3, remove3, NULL);
-	bullet3->runAction(sequence3);
+	bullet3->runAction(sequence3);*/
 }
