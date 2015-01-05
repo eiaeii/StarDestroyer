@@ -1,6 +1,10 @@
 #include "Player.h"
 #include "Bullet.h"
+#include "Define.h"
+#include "SimpleAudioEngine.h"
+
 USING_NS_CC;
+
 bool Player::init()
 {
 	if (!Sprite::init())
@@ -9,58 +13,39 @@ bool Player::init()
 	}
 
 	this->initWithFile("hero/plane1.png");
+	this->setTag(ObjectType::TYPE_PLAYER);
+	
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	this->setPosition(visibleSize.width / 2, this->getContentSize().height);
 	auto body = PhysicsBody::createCircle(20.0f);
+	body->setCategoryBitmask(Gategorybitmask::GATEGORYBITMASK_PLAYER);
+	body->setContactTestBitmask(0xFFFFFFFF);
+	body->setCollisionBitmask(Collisionbitmask::COLLISIONBITMASK_PLAYER);
 	this->setPhysicsBody(body);
-	schedule(schedule_selector(Player::shoot), 0.5f);
+	schedule(schedule_selector(Player::secondWeapon), 1.0f);
 
 	return true;
 }
 
 
-void Player::shoot(float ft)
+void Player::secondWeapon(float ft)
 {
 	auto planePosition = this->getPosition();
 	auto planeSize = this->getContentSize();
 
-	auto visibleSize = Director::getInstance()->getVisibleSize();
-	static float sAngle = 90.0f - CC_RADIANS_TO_DEGREES(atan(visibleSize.height / visibleSize.width));
-
-	auto bullet1 = Bullet::create(); 
-	bullet1->setRotation(-sAngle);
-	this->getParent()->addChild(bullet1);
-	bullet1->setPosition(planePosition.x, planePosition.y + planeSize.height / 2);
-	bullet1->getPhysicsBody()->setVelocity(Vec2(-visibleSize.width, visibleSize.height));
-	/*auto actionMove1 = MoveBy::create(2.0f, Vec2(-visibleSize.width, visibleSize.height));
-	auto remove1 = CallFunc::create([](){
-		
-	});
-	auto sequence1 = Sequence::create(actionMove1, remove1, NULL);
-	bullet1->runAction(sequence1);*/
-
+	//auto visibleSize = Director::getInstance()->getVisibleSize();
+	//static float sAngle = 90.0f - CC_RADIANS_TO_DEGREES(atan(visibleSize.height / visibleSize.width));
 
 	auto bullet2 = Bullet::create();
 	this->getParent()->addChild(bullet2);
-	bullet2->setPosition(planePosition.x, planePosition.y + planeSize.height / 2);
-	auto actionMove2 = MoveBy::create(2.0f, Vec2(0, visibleSize.height));
-	bullet2->getPhysicsBody()->setVelocity(Vec2(0, visibleSize.height));
-	/*auto remove2 = CallFunc::create([](){
-
-	});
-	auto sequence2 = Sequence::create(actionMove2, remove2, NULL);
-	bullet2->runAction(sequence2);*/
-
+	bullet2->setPosition(planePosition.x - 100, planePosition.y);
+	bullet2->getPhysicsBody()->setVelocity(Vec2(0, 500));
 
 	auto bullet3 = Bullet::create();
-	bullet3->setRotation(sAngle);
 	this->getParent()->addChild(bullet3);
-	bullet3->setPosition(planePosition.x, planePosition.y + planeSize.height / 2);
-	bullet3->getPhysicsBody()->setVelocity(Vec2(visibleSize.width, visibleSize.height));
-	/*auto actionMove3 = MoveBy::create(2.0f, Vec2(visibleSize.width, visibleSize.height));
-	auto remove3 = CallFunc::create([](){
+	bullet3->setPosition(planePosition.x + 100, planePosition.y);
+	bullet3->getPhysicsBody()->setVelocity(Vec2(0, 500));
 
-	});
-	auto sequence3 = Sequence::create(actionMove3, remove3, NULL);
-	bullet3->runAction(sequence3);*/
+
+	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("sound/rocket1.mp3");
 }

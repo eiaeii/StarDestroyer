@@ -16,6 +16,7 @@ protected:
 	void onTouchMoved(cocos2d::Touch*, cocos2d::Event*);
 	bool onContactBegin(cocos2d::PhysicsContact &contact);
 	bool onContactPreSolve(cocos2d::PhysicsContact& contact, cocos2d::PhysicsContactPreSolve& solve);
+	void setEnemy(float ft);
 
 	void onEnter() override;
 

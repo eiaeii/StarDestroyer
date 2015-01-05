@@ -3,6 +3,7 @@
 #include "SimpleAudioEngine.h"
 #include "Player.h"
 #include "Define.h"
+#include "Enemy.h"
 
 USING_NS_CC;
 
@@ -71,6 +72,7 @@ void GameScene::onEnter()
 	world->setContactTestBitmask(0xFFFFFFFF);
 	world->setCollisionBitmask(Collisionbitmask::COLLISIONBITMASK_WORLD);
 	auto node = Node::create();
+	node->setTag(ObjectType::TYPE_WORLD);
 	node->setPosition(Director::getInstance()->getVisibleSize() / 2);
 	node->setPhysicsBody(world);
 	this->addChild(node);
@@ -79,6 +81,8 @@ void GameScene::onEnter()
 	contactListener->onContactBegin = CC_CALLBACK_1(GameScene::onContactBegin, this);
 	contactListener->onContactPreSolve = CC_CALLBACK_2(GameScene::onContactPreSolve, this);
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, this);
+
+	schedule(schedule_selector(GameScene::setEnemy), 1.0f);
 }
 
 
@@ -86,7 +90,61 @@ bool GameScene::onContactBegin(cocos2d::PhysicsContact &contact)
 {
 	auto spriteA = contact.getShapeA()->getBody()->getNode();
 	auto spriteB = contact.getShapeB()->getBody()->getNode();
+	if (spriteA == NULL || spriteB == NULL)
+	{
+		return false;
+	}
+	auto tagA = spriteA->getTag();
+	auto tagB = spriteB->getTag();
 
+	//子弹和边界碰撞则移除
+	if ((tagA | tagB) == (ObjectType::TYPE_PLAYER_BULLET | ObjectType::TYPE_WORLD) || (tagA | tagB) == (ObjectType::TYPE_ENEMY_BULLET | ObjectType::TYPE_WORLD))
+	{
+		if ((tagA == ObjectType::TYPE_PLAYER_BULLET) || (tagA == ObjectType::TYPE_ENEMY_BULLET))
+		{
+			spriteA->removeAllChildrenWithCleanup(true);
+		}
+		else if ((tagB == ObjectType::TYPE_PLAYER_BULLET) || (tagB == ObjectType::TYPE_ENEMY_BULLET))
+		{
+			spriteB->removeAllChildrenWithCleanup(true);
+		}
+		return false;
+	}
+
+	//玩家飞机和边界不碰撞
+	else if ((tagA | tagB) == (ObjectType::TYPE_PLAYER | ObjectType::TYPE_WORLD))
+	{
+		return false;
+	}
+
+	//玩家飞机和敌机
+	else if ((tagA | tagB) == (ObjectType::TYPE_PLAYER | ObjectType::TYPE_ENEMY))
+	{
+		if (tagA == ObjectType::TYPE_ENEMY)
+		{
+			spriteA->removeFromParentAndCleanup(true);
+		}
+		else if (tagB == ObjectType::TYPE_ENEMY)
+		{
+			spriteB->removeFromParentAndCleanup(true);
+		}
+		return false;
+	}
+
+	else if ((tagA | tagB) == (ObjectType::TYPE_PLAYER_BULLET | ObjectType::TYPE_ENEMY))
+	{
+		if (tagA == ObjectType::TYPE_PLAYER_BULLET)
+		{
+			spriteA->removeFromParentAndCleanup(true);
+			spriteB->removeFromParentAndCleanup(true);
+		}
+		else if (tagB == ObjectType::TYPE_PLAYER_BULLET)
+		{
+			spriteA->removeFromParentAndCleanup(true);
+			spriteB->removeFromParentAndCleanup(true);
+		}
+		return false;
+	}
 	return true;
 }
 
@@ -94,4 +152,18 @@ bool GameScene::onContactBegin(cocos2d::PhysicsContact &contact)
 bool GameScene::onContactPreSolve(PhysicsContact& contact, PhysicsContactPreSolve& solve)
 {
 	return true;
+}
+
+void GameScene::setEnemy(float ft)
+{
+	float random = CCRANDOM_0_1();
+	auto visibleSize = Director::getInstance()->getVisibleSize();
+	auto enemy = Enemy::create();
+	this->addChild(enemy);
+	auto pos = Vec2(random * visibleSize.width, visibleSize.height);
+	auto size = enemy->getContentSize();
+	pos.x = pos.x < size.width ? size.width : pos.x;
+	pos.x = pos.x > visibleSize.width - size.width ? visibleSize.width - size.width : pos.x;
+	enemy->setPosition(pos);
+	enemy->getPhysicsBody()->setVelocity(Vec2(0, -200));
 }

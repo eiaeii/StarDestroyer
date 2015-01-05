@@ -8,6 +8,6 @@ public:
 	virtual bool init();
 	CREATE_FUNC(Player);
 protected:
-	void shoot(float ft);
+	void secondWeapon(float ft);
 };
 

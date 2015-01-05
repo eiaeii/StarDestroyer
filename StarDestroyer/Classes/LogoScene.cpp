@@ -41,9 +41,11 @@ void LogoScene::preloadResources()
 	Director::getInstance()->getTextureCache()->addImage("map/bg1.jpg");
 	Director::getInstance()->getTextureCache()->addImage("hero/plane1.png");
 	Director::getInstance()->getTextureCache()->addImage("bullet/assisent1_01.png");
+	Director::getInstance()->getTextureCache()->addImage("enemy/enemy1_1.png");
 
 	SpriteFrameCache::getInstance()->addSpriteFramesWithFile("hero/hero1.plist");
 
 	CocosDenshion::SimpleAudioEngine::getInstance()->preloadBackgroundMusic("sound/background-music1.mp3");
-
+	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("sound/rocket1.mp3");
+	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("sound/short_lazer.mp3");
 }
