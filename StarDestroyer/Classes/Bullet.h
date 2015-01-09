@@ -5,6 +5,15 @@ class Bullet :
 	public cocos2d::Sprite
 {
 public:
-	virtual bool init();
-	CREATE_FUNC(Bullet);
+
+	enum BulletType
+	{
+		Bullet_Unkown = 0,
+		Bullet_Player_main,
+		Bullet_Player_second,
+		Bullet_Enemy1_main,
+	};
+
+	virtual bool init(int iType);
+	static Bullet* createWithType(int iType);
 };

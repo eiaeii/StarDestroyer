@@ -122,10 +122,12 @@ bool GameScene::onContactBegin(cocos2d::PhysicsContact &contact)
 	{
 		if (tagA == ObjectType::TYPE_ENEMY)
 		{
+			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("sound/explosion4.mp3");
 			spriteA->removeFromParentAndCleanup(true);
 		}
 		else if (tagB == ObjectType::TYPE_ENEMY)
 		{
+			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("sound/explosion4.mp3");
 			spriteB->removeFromParentAndCleanup(true);
 		}
 		return false;
@@ -135,11 +137,13 @@ bool GameScene::onContactBegin(cocos2d::PhysicsContact &contact)
 	{
 		if (tagA == ObjectType::TYPE_PLAYER_BULLET)
 		{
+			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("sound/explosion4.mp3");
 			spriteA->removeFromParentAndCleanup(true);
 			spriteB->removeFromParentAndCleanup(true);
 		}
 		else if (tagB == ObjectType::TYPE_PLAYER_BULLET)
 		{
+			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("sound/explosion4.mp3");
 			spriteA->removeFromParentAndCleanup(true);
 			spriteB->removeFromParentAndCleanup(true);
 		}

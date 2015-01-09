@@ -48,4 +48,5 @@ void LogoScene::preloadResources()
 	CocosDenshion::SimpleAudioEngine::getInstance()->preloadBackgroundMusic("sound/background-music1.mp3");
 	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("sound/rocket1.mp3");
 	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("sound/short_lazer.mp3");
+	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("sound/explosion4.mp3");
 }

@@ -1,5 +1,6 @@
 #include "Enemy.h"
 #include "Define.h"
+#include "SimpleAudioEngine.h"
 USING_NS_CC;
 
 bool Enemy::init()

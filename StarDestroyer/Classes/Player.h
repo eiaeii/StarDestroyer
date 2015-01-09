@@ -9,5 +9,6 @@ public:
 	CREATE_FUNC(Player);
 protected:
 	void secondWeapon(float ft);
+	void mainWeapon(float ft);
 };
 
