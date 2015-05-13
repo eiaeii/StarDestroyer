@@ -27,7 +27,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
     if(!glview) {
-        glview = GLViewImpl::create("My Game");
+        glview = GLViewImpl::create("StarDestroyer");
         director->setOpenGLView(glview);
     }
 	glview->setFrameSize(360, 640);
@@ -38,7 +38,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0 / 60);
 
-	FileUtils::getInstance()->addSearchPath("Resources");
+	FileUtils::getInstance()->addSearchPath("Resources", true);
 
     // create a scene. it's an autorelease object
 	auto scene = LogoScene::createScene();
